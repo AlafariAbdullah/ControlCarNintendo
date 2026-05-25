@@ -11,12 +11,42 @@ def press(btn):
         print(f"error: {e}")
 
 root = tk.Tk()
-root.title("Switch Buttons")
+root.title("Switch Controller")
 root.resizable(False, False)
+root.configure(bg="#1a1a1a")
 
-for btn in ["ZL", "A", "B", "PLUS"]:
-    tk.Button(root, text=btn, font=("Courier", 13),
-              width=20, bg="#2a2a2a", fg="white",
-              command=lambda b=btn: press(b)).pack(pady=4, padx=16)
+def make_label(text):
+    tk.Label(root, text=text, font=("Courier", 10, "bold"),
+             bg="#1a1a1a", fg="#888888").pack(pady=(10, 2))
+
+def make_row(buttons):
+    frame = tk.Frame(root, bg="#1a1a1a")
+    frame.pack(pady=2, padx=16)
+    for btn, label in buttons:
+        tk.Button(frame, text=label, font=("Courier", 12),
+                  width=9, bg="#2a2a2a", fg="white", relief="flat",
+                  command=lambda b=btn: press(b)).pack(side="left", padx=4)
+
+# Face buttons
+make_label("── Face ──")
+make_row([("A", "A"), ("B", "B"), ("X", "X"), ("Y", "Y")])
+
+# Triggers
+make_label("── Triggers ──")
+make_row([("L", "L"), ("R", "R")])
+make_row([("ZL", "ZL"), ("ZR", "ZR")])
+
+# D-Pad
+make_label("── D-Pad ──")
+make_row([("DPAD_UP", "▲")])
+make_row([("DPAD_LEFT", "◄"), ("DPAD_DOWN", "▼"), ("DPAD_RIGHT", "►")])
+
+# Stick clicks
+make_label("── Sticks ──")
+make_row([("L_STICK_PRESS", "L Click"), ("R_STICK_PRESS", "R Click")])
+
+# System
+make_label("── System ──")
+make_row([("MINUS", "−"), ("PLUS", "+"), ("HOME", "⌂"), ("CAPTURE", "●")])
 
 root.mainloop()
